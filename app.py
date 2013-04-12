@@ -8,8 +8,8 @@ urls = (
 
 class index:
 	def GET(self):
-		#return render.posts(view.posts(),title="Home")
-		return view.posts()
+		return render.base(view.posts(),title="Home")
+		#return view.posts()
 
 if __name__ == "__main__":
 	app = web.application(urls,globals())

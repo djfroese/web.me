@@ -1,14 +1,4 @@
-$def with (posts, title=None)
-<!DOCTYPE html>
-<html>
-<head>
-	<title>Web.Me\
-$if title: : $title\
-	</title>
-</head>
-<body>
-	$for post in posts:
-		<h1>$post.title</h1>
-		<p>$post.body</p>
-</body>
-</html>
+$def with (posts)
+
+$for post in posts:
+    $:render.post(post)
