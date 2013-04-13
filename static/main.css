@@ -20,11 +20,11 @@ address {
 
 .content {
 	margin-left: 250px;
-	width: 900px;
+	width: 800px;
 }
 
 .post {
-	border: 1px solid #eee;
+	border: 1px solid #dddddd;
 	margin: 10px;
 	padding: 10px;
 }
