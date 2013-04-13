@@ -6,11 +6,23 @@ $def with (page, title=None)
 $if title: : $title\
 	</title>
 	<link href="./static/main.css" rel='stylesheet' type='text/css' />
+	<link href="http://osxbase.local/utils/bootstrap/css/bootstrap.css" rel='stylesheet' type='text/css' />
+	<script src="http://osxbase.local/utils/jquery/1.9.1/jquery.min.js" type='text/javascript'></script>
 </head>
 <body>
 	<div>
 	<div class='sidebar'>
-		some content
+		<div>
+			<img src='./static/me.png'>
+			<br /><br />
+			<address>
+				<strong>David Froese</strong><br />
+				<abbr title="Phone" class='initialism'>P:</abbr> 204.230.9228<br />
+				<a href="mailto:#">david.froese@gmail.com</a><br />
+				1187 Warsaw Crescent<br>
+				Winnipeg, MB<br />
+			</address>
+		</div>
 	</div>
 	<div class='content'>
 		$:page

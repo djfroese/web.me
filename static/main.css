@@ -1,18 +1,30 @@
 body {
 	height: 100%;
 }
+
+address {
+	text-align: right;
+	padding-right: 15px;
+}
+
 .sidebar {
 	position: fixed;
-	width: 200px;
+	width: 210px;
 	height: auto;
 	top: 0;
 	left: 0;
 	bottom: 0;
-	box-shadow: 0 0 15px rgba(0,0,0,0.7);
-	vertical-align
+	box-shadow: 0 0 10px rgba(0,0,0,0.1);
+	padding: 10px 0px 0px 15px;
 }
 
 .content {
-	margin-left: 225px;
-	width: 800px;
+	margin-left: 250px;
+	width: 900px;
+}
+
+.post {
+	border: 1px solid #eee;
+	margin: 10px;
+	padding: 10px;
 }

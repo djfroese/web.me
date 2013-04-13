@@ -9,4 +9,4 @@ render._keywords['globals']['render'] = render
 
 def posts(**k):
 	l = db.posts(**k)
-	return render.posts(l)
+	return render.posts.list(l)
