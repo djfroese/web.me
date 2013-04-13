@@ -36,3 +36,6 @@ nosetests.xml
 
 # Espresso Project Files
 *.esproj
+
+# database files to ignore
+dev
