@@ -1,5 +1,5 @@
 import web
-import datetime, markdown
+import datetime
 import view, config
 from view import render
 
