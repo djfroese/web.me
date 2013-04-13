@@ -1,17 +1,15 @@
-$def with (item=None)
-
 <div style='margin-top: 40px;'>
-<form method="POST" action="/_edit/$item.id" class='form-horizontal'>
+<form method="POST" action="/_new" class='form-horizontal'>
 	<div class="control-group">
 		<label class='control-label' for="title">Title:</label>
 		<div class='controls'>
-			<input type="text" name='title' value="$item.title">
+			<input type="text" name='title' value="">
 		</div>
 	</div>
 	<div class="control-group">
 		<label class='control-label' for="title">Content:</label>
 		<div class='controls'>
-			<textarea rows="20" name="body" style='width: 500px;'>$item.body</textarea>
+			<textarea rows="20" name="body" style='width: 500px;'></textarea>
 		</div>
 	</div>
 	<div class="control-group">

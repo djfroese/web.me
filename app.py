@@ -1,5 +1,5 @@
 import web
-import datetime
+import datetime, markdown
 import view, config
 from view import render
 
@@ -8,7 +8,8 @@ PAGE_RE = r'((?:[a-zA-Z0-9_-]+/?)*)'
 urls = (
 	'/','index',
 	'/post/'+PAGE_RE,'post',
-	'/_edit/'+PAGE_RE,'edit'
+	'/_edit/'+PAGE_RE,'edit',
+	'/_new','new'
 	)
 
 class index:
@@ -26,7 +27,17 @@ class edit:
 	def POST(self,pid):
 		data = web.input()
 		config.DB.update('Posts', where='id=%s'%pid, title=data.title, body=data.body,modified=datetime.datetime.now())
-		web.seeother('/')		
+		raise web.seeother('/')
+
+class new:
+    def GET(self):
+        return render.base(view.new())
+        
+    def POST(self):
+        data = web.input()
+        t = datetime.datetime.now()
+        config.DB.insert('Posts', title=data.title, body=data.body, created=t, modified=t)
+        raise web.seeother('/')
 
 if __name__ == "__main__":
 	app = web.application(urls,globals())
