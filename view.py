@@ -16,8 +16,11 @@ def posts(**k):
 	return render.posts.list(l)
 
 def edit(**k):
-	item = db.posts(**k)	
-	return render.posts.edit(item[0])
+	item = db.posts(**k)
+	if item:
+		return render.posts.edit(item)
+	
+	raise web.seeother('/')
 
 def new():
     return render.posts.new()

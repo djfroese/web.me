@@ -22,11 +22,13 @@ class post:
 
 class edit:
 	def GET(self,pid):
-		return render.base(view.edit(where='id=%s'%pid))
+		return render.base(view.edit(where='id=%s'%pid,limit=1))
 	
 	def POST(self,pid):
 		data = web.input()
 		config.DB.update('Posts', where='id=%s'%pid, title=data.title, body=data.body,modified=datetime.datetime.now())
+		config.MC.delete(str('post_id=%s'%pid))
+		config.MC.delete('posts_all')
 		raise web.seeother('/')
 
 class new:
@@ -37,6 +39,7 @@ class new:
         data = web.input()
         t = datetime.datetime.now()
         config.DB.insert('Posts', title=data.title, body=data.body, created=t, modified=t)
+        config.MC.delete('posts_all')
         raise web.seeother('/')
 
 if __name__ == "__main__":
