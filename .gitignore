@@ -39,3 +39,5 @@ nosetests.xml
 
 # database files to ignore
 dev
+
+.DS_Store
