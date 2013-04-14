@@ -28,6 +28,6 @@ def posts(**k):
             if posts:
                 vals = [p for p in posts]
                 config.MC.set('posts_all',vals)
-                return posts
+                return vals
             else:
                 return None
