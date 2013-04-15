@@ -5,16 +5,20 @@ $def with (page, title=None, user=None)
 	<title>Web.Me\
 $if title: : $title\
 	</title>
-	<link href="../static/main.css" rel='stylesheet' type='text/css' />
+	<link href="../static/main.css" rel='stylesheet' type='text/css' media='screen and (min-device-width: 700px)' />
+	<link href="../static/small-screen.css" rel='stylesheet' type='text/css' media='screen and (max-device-width: 480px)' />
 	<link href="http://grimnir.davidfroese.com/utils/bootstrap/css/bootstrap.css" rel='stylesheet' type='text/css' />
 	<script src="http://grimnir.davidfroese.com/utils/jquery/1.9.1/jquery.min.js" type='text/javascript'></script>
+	<meta name="viewport" content="width=device-width" />
 </head>
 <body>
 	<div>
 	<div class='sidebar'>
-		<div>
+		<div class='picture'>
 			<a alt="Home" href="/"><img src='../static/me.png'></a>
 			<br /><br />
+		</div>
+		<div class='contact'>
 			<address>
 				<strong>Your Name</strong><br />
 				<abbr title="Phone" class='initialism'>P:</abbr> 204.555.1234<br />

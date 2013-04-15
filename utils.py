@@ -1,5 +1,5 @@
 import web, random, string, hashlib, hmac
-from users import Users
+from Users.users import Users
 
 #--------------------------------------------------------------------------
 # Hashing functions

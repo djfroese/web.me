@@ -3,7 +3,7 @@
 import web
 import datetime
 import view, config, utils
-from users import Users
+from Users.users import Users
 from view import render
 from Posts.handlers import *
 from Users.handlers import *

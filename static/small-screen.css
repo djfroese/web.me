@@ -1,0 +1,37 @@
+body {
+	height: 100%;
+	width: 480px;
+}
+
+address {
+	text-align: right;
+	padding-right: 15px;
+}
+
+.sidebar {
+	height: 100%;
+	padding: 5px;
+}
+
+.content {
+}
+
+.post {
+	border: 1px solid #ededed;
+	margin: 5px;
+	padding: 5px;
+}
+
+div.picture {
+    display:  inline-block;
+}
+
+div.picture a img {
+    width: 130px;
+    height:  130px;
+}
+
+div.contact {
+    display: inline-block;
+    width: 300px;
+}
