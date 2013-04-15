@@ -10,3 +10,6 @@ t_globals = dict(
 
 render = web.template.render('templates/', cache=config.cache, globals=t_globals)
 render._keywords['globals']['render'] = render
+
+def login():
+    return render.users.login()

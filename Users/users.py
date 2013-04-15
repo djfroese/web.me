@@ -1,14 +1,6 @@
-import config
+import config, utils, view
 
 class Users:
-    
-    @classmethod
-    def login(self, username, password):
-        pass
-    
-    @classmethod
-    def logout(self, username, password):
-        pass
     
     @classmethod
     def userByName(self, name):
@@ -25,3 +17,4 @@ class Users:
             return user
         else:
             return None
+
