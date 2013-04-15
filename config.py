@@ -8,7 +8,7 @@ cache = False
 debugmode = True
 
 #memcache server list
-server_list = ['192.168.1.26:11211']
+server_list = ['127.0.0.1:11211']
 
 DB = web.database(dbn=db_app,db=db_name)
 MC = memcache.Client(server_list,debug=1)

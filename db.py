@@ -4,10 +4,8 @@ def posts(**k):
     #result = config.DB.select('Posts',order='id desc',**k)
     
     if 'where' in k:
-        print 'where found - should only show if requesting one post'
         post = config.MC.get('post_%s'%str(k['where']))
         if post:
-            print 'Cache Value Found'
             return post
         else:
             post = config.DB.select('Posts',order='id desc',**k)
@@ -18,10 +16,8 @@ def posts(**k):
             else:
                 return None
     else:
-        print 'where NOT found - should only show if requesting all posts'
         posts = config.MC.get('posts_all')
         if posts:
-            print 'Cache Value Found'
             return posts
         else:
             posts = config.DB.select('Posts',order='id desc',**k)

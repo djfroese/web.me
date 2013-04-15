@@ -1,5 +1,5 @@
 import web, random, string, hashlib, hmac
-
+from users import Users
 
 #--------------------------------------------------------------------------
 # Hashing functions
@@ -40,8 +40,12 @@ class WebRequestHandler():
         return cookie_val and check_secure_val(cookie_val)
     
     def login(self, user):
-        self.setSecureCookie('user_id', str(user.key().id()))
+        self.setSecureCookie('user_id',str(user.id))
     
     def logout(self):
-        web.setcookie('user_id','',domain='/')
-        #self.response.headers.add_header('Set-Cookie', 'user_id=; Path=/')
+        self.user = None
+        web.setcookie('user_id','',expires=0)
+    
+    def __init__(self):
+    	uid = self.readSecureCookie('user_id')
+    	self.user = uid and Users.userById(uid)    

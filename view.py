@@ -35,4 +35,6 @@ def new():
 def detail(**k):
     l = db.posts(**k)
     return render.posts.detail(l)
-    
+
+def login():
+    return render.users.login()
