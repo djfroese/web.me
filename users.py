@@ -1,4 +1,3 @@
-import web
 import config
 
 class Users:
