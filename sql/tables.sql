@@ -16,3 +16,11 @@ lastname text,
 created datetime,
 modifited datetime
 );
+
+CREATE TABLE Images (
+id integer primary key asc autoincrement,
+url text,
+pid integer,
+album integer,
+data text
+);
