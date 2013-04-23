@@ -22,5 +22,5 @@ id integer primary key asc autoincrement,
 url text,
 pid integer,
 album integer,
-data text
+data blob
 );
