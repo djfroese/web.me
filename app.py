@@ -20,7 +20,8 @@ urls = (
     '/_delete/'+PAGE_RE,'delete',
     '/_flush','flush',
     '/_login','login',
-    '/_logout','logout'
+    '/_logout','logout',
+    '/_reg','register'
     )
 
 class index(utils.WebRequestHandler):

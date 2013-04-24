@@ -13,3 +13,6 @@ render._keywords['globals']['render'] = render
 
 def login():
     return render.users.login()
+    
+def register(errors=None):
+    return render.users.register(errors=errors)

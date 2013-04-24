@@ -18,3 +18,12 @@ class Users:
         else:
             return None
 
+    @classmethod
+    def register(cls, name, pw, email=None):
+        pw_hash = utils.make_pw_hash(name,pw)
+        if email:
+            uid = data.insert('Users',username=name, password=pw_hash)
+        else:
+            uid = data.insert('Users',username=name, password=pw_hash,email=email)
+        
+        return self.userById(uid)[0]
