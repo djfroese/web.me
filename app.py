@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python
 
 import web
 import datetime
@@ -19,7 +19,8 @@ urls = (
     '/_flush','flush',
     '/_login','login',
     '/_logout','logout',
-    '/_reg','register'
+    '/_reg','register',
+    '/projects','projects'
     )
 
 class index(utils.WebRequestHandler):
@@ -35,8 +36,10 @@ class flush:
         else:
             raise web.seeother('/')
 
+class projects:
+    def GET(self):
+        return views.render.base(views.Base.projects())
 
-    
 if __name__ == "__main__":
     app = web.application(urls,globals())
     if config.debugmode:
