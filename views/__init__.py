@@ -3,6 +3,9 @@ import db
 import config
 import markdown
 
+from Posts import *
+from Users import *
+
 t_globals = dict(
     datestr=web.datestr,
     markdown=markdown.markdown,

@@ -2,12 +2,10 @@
 
 import web
 import datetime
-import view, config, utils
-from Users.users import Users
-from view import render
-from Posts.handlers import *
-from Users.handlers import *
-import Posts
+import views, config, utils
+from views import *
+from controllers import *
+
 
 PAGE_RE = r'((?:[a-zA-Z0-9_-]+/?)*)'
 
@@ -26,7 +24,7 @@ urls = (
 
 class index(utils.WebRequestHandler):
     def GET(self):
-        return render.base(Posts.view.posts(),title="Home",user=self.user)
+        return views.render.base(views.Posts.posts(),title="Home",user=self.user)
         
 
 class flush:

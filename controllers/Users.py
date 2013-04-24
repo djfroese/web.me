@@ -1,27 +1,29 @@
 import web
-import utils, config, view
-from view import *
-from users import Users
+import utils, config
+import views
+from views import *
+import models
+from models import Users
 
 class login(utils.WebRequestHandler):
     def GET(self):
-        return render.base(view.login(),user=self.user)
+        return views.render.base(views.Users.login(),user=self.user)
 
     def POST(self):
-        data = web.input()
-        user = [x for x in Users.userByName(data.username)][0]
+        data_in = web.input()
+        user = Users.userByName(data_in.username)
         if user:
-            result = utils.valid_pw(data.username, data.password, user.pw)
+            result = utils.valid_pw(data_in.username, data_in.password, user.pw)
             if result:
                 self.login(user)
                 self.user = user
                 raise web.seeother('/')
             else:
-                return render.base(view.login(),user=self.user)
+                return views.render.base(views.Users.login(),user=self.user)
         else:
-            return render.base(view.login(),user=self.user)
+            return views.render.base(views.Users.login(),user=self.user)
         
-        return render.base(view.login(),user=self.user)
+        return views.render.base(views.Users.login(),user=self.user)
 
 
 class logout(utils.WebRequestHandler):
@@ -31,11 +33,11 @@ class logout(utils.WebRequestHandler):
 
 class register(utils.WebRequestHandler):
     def GET(self):
-        return render.base(view.register())
+        return views.render.base(views.Users.register())
     
     def POST(self):
-        data = web.input()
-        user = Users.userByName(data.username)
+        data_in = web.input()
+        user = Users.userByName(data_in.username)
         
         errors = {}
         
@@ -43,17 +45,15 @@ class register(utils.WebRequestHandler):
             # need to send render register page with error message
             errors['exists'] = True
         
-        if validate_pw(data.password, data.confirm):
+        if validate_pw(data.password, data_in.confirm):
             errors['nomatch'] = True
-        
-        #print errors
-        
+                
         if errors == {}:
-            user = Users.register(data.name, data.passwrod)
+            user = Users.register(data_in.name, data_in.passwrod)
             self.login(user)
             raise web.seeother('/')
         else:
-            return render.base(view.register(errors))
+            return views.render.base(views.Users.register(errors))
             
 def validate_pw(pw,confirm):
     if pw == confirm:

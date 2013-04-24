@@ -1,15 +1,15 @@
 import web, datetime
-import utils, config, view
-from view import *
+import utils, config, views
+from views import *
 
 class post(utils.WebRequestHandler):
     def GET(self,pid):
-        return render.base(view.post(where='id=%s'%pid,limit=1),user=self.user)
+        return views.render.base(views.Posts.post(where='id=%s'%pid,limit=1),user=self.user)
 
 class edit(utils.WebRequestHandler):
     def GET(self,pid):
         if self.user:
-            return render.base(view.edit(where='id=%s'%pid,limit=1),user=self.user)
+            return views.render.base(views.Posts.edit(where='id=%s'%pid,limit=1),user=self.user)
         else:
             raise web.seeother('/')
     
@@ -23,7 +23,7 @@ class edit(utils.WebRequestHandler):
 class new(utils.WebRequestHandler):
     def GET(self):
         if self.user:
-            return render.base(view.new(),user=self.user)
+            return views.render.base(views.Posts.new(),user=self.user)
         else:
             raise web.seeother('/')
         
@@ -40,7 +40,7 @@ class new(utils.WebRequestHandler):
 class detail(utils.WebRequestHandler):
     def GET(self):
         if self.user:
-            return render.base(view.detail(),user=self.user)
+            return views.render.base(views.Posts.detail(),user=self.user)
         else:
             raise web.seeother('/')
 
