@@ -1,6 +1,6 @@
-import web, random, string, hashlib, hmac, config, memcache
-#import models
-from models import Users
+import web, random, string, hashlib, hmac, config
+import models
+
 #--------------------------------------------------------------------------
 # Hashing functions
 #--------------------------------------------------------------------------
@@ -48,42 +48,5 @@ class WebRequestHandler():
     
     def __init__(self):
     	uid = self.readSecureCookie('user_id')
-    	self.user = uid and Users.userById(uid)    
+    	self.user = uid and models.Users.userById(uid)    
 
-class data:
-    @classmethod
-    def select(self, table, **k):
-        return config.DB.select(table,**k)
-    
-    @classmethod
-    def update(self, table, **k):
-        return config.DB.update(table,**k)
-    
-    @classmethod
-    def delete(self, table, **k):
-        return config.DB.delete(table,**k)
-    
-    @classmethod
-    def insert(self, table, **k):
-        return config.DB.insert(table,**k)
-
-class cache:
-    @classmethod
-    def get(self, type, key):
-        value = memcached.get('%s_%s'%(type,key))
-        if value:
-            return value
-        else:
-            return None
-    
-    @classmethod
-    def set(self, type, key, value):
-        memcached.set('%s_%s'%(type,key),value)
-    
-    @classmethod
-    def delete(self, type, key):
-        memcached.delete('%s_%s'%(type,key))
-    
-    @classmethod
-    def flush(self):
-        memcached.flush_all()

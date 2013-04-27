@@ -1,14 +1,16 @@
+from datastore import cache, data
 import utils
 
 class Users:
+    
     @classmethod
     def userById(self,uid):
-        user = utils.data.select('Users',where='id=%s'%uid,limit=1)[0]
+        user = data.select('Users',where='id=%s'%uid,limit=1)[0]
         return user
     
     @classmethod
     def userByName(self,name):
-        users = utils.data.select('Users',where='username="%s"'%name,limit=1)
+        users = data.select('Users',where='username="%s"'%name,limit=1)
         if users:
             return [x for x in users][0]
             #return user[0]
@@ -19,11 +21,11 @@ class Users:
     def register(cls, name, pw, email=None):
         pw_hash = utils.make_pw_hash(name,pw)
         if email:
-            uid = utils.data.insert('Users',username=name, password=pw_hash)
+            uid = data.insert('Users',username=name, pw=pw_hash)
         else:
-            uid = utils.data.insert('Users',username=name, password=pw_hash,email=email)
+            uid = data.insert('Users',username=name, pw=pw_hash,email=email)
         
-        return self.userById(uid)
+        return cls.userById(uid)
     
     @classmethod
     def login(cls, name, pw):

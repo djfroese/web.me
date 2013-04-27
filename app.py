@@ -28,17 +28,11 @@ class index(utils.WebRequestHandler):
         return views.render.base(views.Posts.posts(),title="Home",user=self.user)
         
 
-class flush:
+class flush(utils.WebRequestHandler):
     def GET(self):
         if self.user:
             config.MC.flush_all()
-            raise web.seeother('/')
-        else:
-            raise web.seeother('/')
-
-class projects:
-    def GET(self):
-        return views.render.base(views.Base.projects())
+        raise web.seeother('/')
 
 if __name__ == "__main__":
     app = web.application(urls,globals())

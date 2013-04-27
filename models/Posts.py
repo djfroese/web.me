@@ -1,21 +1,21 @@
-import utils
+from datastore import data, cache
 
 class Posts:
     @classmethod
-    def posts(self):
-        value = utils.cache.get('Posts','all')
+    def posts(self,**k):
+        value = cache.get('Posts','all')
         if value is None:
-            value = utils.data.select('Posts',order='asc created')
-            utils.cache.set('Posts','all',value)
+            value = [x for x in data.select('Posts',order='created DESC',**k)]
+            cache.set('Posts','all',value)
         
         return value
     
     @classmethod
     def postById(self,pid):
-        value = utils.cache.get('Posts',pid)
+        value = cache.get('Posts',pid)
         if value is None:
-            value = utils.data.select('Posts',where='id=%s'%pid)
-            utils.cache.set('Posts',pid,value)
+            value = [x for x in data.select('Posts',where='id=%s'%pid)][0]
+            cache.set('Posts',pid,value)
         
         return value
     
@@ -23,18 +23,21 @@ class Posts:
     def createPost(self,**k):
         seqid = data.insert('Posts',**k)
         if seqid > -1:
-            value = utils.data.select('Posts',where='id=%s'%seqid)
-            utils.cache.set('Posts',value.id,value)
-            return True
+            value = [x for x in data.select('Posts',where='id=%s'%seqid)][0]
+            cache.set('Posts',value.id,value)
+            cache.delete('Posts','all')
+            return seqid
         else:
             return False
     
     @classmethod
     def deletePost(self,pid):
-        utils.cache.delete('Posts',pid)
-        utils.data.delete('Posts',where='id=%s'%pid)
+        cache.delete('Posts',pid)
+        cache.delete('Posts','all')
+        data.delete('Posts',where='id=%s'%pid)
     
     @classmethod
-    def updatePost(self,**k):
-        utils.data.update('Posts',**k)
-        utils.cache.delete('Posts',pid)
+    def updatePost(self,pid,**k):
+        data.update('Posts',**k)
+        cache.delete('Posts','all')
+        cache.delete('Posts',pid)

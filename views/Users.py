@@ -4,7 +4,6 @@ import config
 import markdown
 import views
 
-
 def login():
     return views.render.users.login()
     

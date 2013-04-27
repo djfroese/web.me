@@ -6,6 +6,7 @@ import markdown
 from Posts import *
 from Users import *
 from Base import *
+from Projects import *
 
 t_globals = dict(
     datestr=web.datestr,

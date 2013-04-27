@@ -33,9 +33,15 @@ class logout(utils.WebRequestHandler):
 
 class register(utils.WebRequestHandler):
     def GET(self):
-        return views.render.base(views.Users.register())
+        if self.user:
+            return views.render.base(views.Users.register())
+        else:
+            raise web.seeother('/')
     
     def POST(self):
+        if not self.user:
+            raise web.seeother('/')
+    
         data_in = web.input()
         user = Users.userByName(data_in.username)
         
@@ -45,11 +51,11 @@ class register(utils.WebRequestHandler):
             # need to send render register page with error message
             errors['exists'] = True
         
-        if validate_pw(data.password, data_in.confirm):
+        if validate_pw(data_in.password, data_in.confirm):
             errors['nomatch'] = True
                 
         if errors == {}:
-            user = Users.register(data_in.name, data_in.passwrod)
+            user = Users.register(data_in.username, data_in.password)
             self.login(user)
             raise web.seeother('/')
         else:
