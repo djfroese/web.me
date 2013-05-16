@@ -4,7 +4,7 @@ db_name = 'dev'
 db_app = 'sqlite'
 
 # Storing images folder location
-staticImagePath = '/Users/david/temp'
+staticImagePath = '/Users/david/Documents/Projects/web.me/static/uploads'
 
 # whether to cache the rendered templates
 cache = False

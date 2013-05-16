@@ -26,6 +26,6 @@ class upload(utils.WebRequestHandler):
         raise web.seeother('/_upload')
 
 class thumbnail(utils.WebRequestHandler):
-    def GET(self,albumid):
-        return views.render.base(views.Images.thumbnail(albumid),user=self.user)
+    def GET(self):
+        return views.render.base(views.Images.thumbnails(),user=self.user)
 

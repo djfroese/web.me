@@ -2,8 +2,9 @@ import web
 import views
 import models
 
-def thumbnails(albumid):
-    images = models.Images.urlsForAlbumId(albumid)
+def thumbnails():
+    #images = models.Images.urlsForAlbumId(albumid)
+    images = models.Images.all()
     return views.render.images.thumbnail(images)
 
 def upload():

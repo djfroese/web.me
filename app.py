@@ -22,7 +22,7 @@ urls = (
     '/_reg','register',
     '/projects','projects',
     '/_upload','upload',
-    '/_thumnail/'+PAGE_RE,'thumbnail'
+    '/_thumbnail','thumbnail'
     )
 
 class index(utils.WebRequestHandler):

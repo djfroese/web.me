@@ -4,9 +4,10 @@ $def with (images)
 $for image in images:
     <li class='span3'>
         <div class='thumbnail'>
-            <a href='#' class='thumbnail'><img src='$image.url' alt=''></a>
-            <h4 class='text-center'>Monitor Stand</h4>
+            <a href='$image.url' class='thumbnail'>
+            <img style='background: url($image.url); width: 200px; height: 200px; background-size:cover;'>
+            </a>
+            <h4 class='text-center'>$image.alt</h4>
         </div>
     </li>
 <ul>
-    

@@ -27,6 +27,17 @@ class Images:
         
         return [image.url for image in album]
 
+    @classmethod
+    def all(self):
+        result = cache.get('Images','all')
+        if not result:
+            result = data.select('Images')
+            if not result:
+                return None
+            else:
+                cache.set('Images','all',result)
+        
+        return result
 
     @classmethod
     def storeImage(self, imageFile):
@@ -44,7 +55,7 @@ class Images:
     def addImage(self, file, alt_text=''):
         # take file and store in static files images.
         filename = self.storeImage(file)
-        url = '../static/'+filename+'.jpg'
+        url = '../static/uploads/'+filename+'.jpg'
         # insert into db
         print alt_text
         data.insert('Images', url=url, id=filename, alt=alt_text)
