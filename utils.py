@@ -27,8 +27,8 @@ def check_secure_val(h):
     if make_secure_val(val) == h:
         return val
     
-def createHashID(input,length=5):
-    h = haslib.sha256(input).hexdigest()[:5]
+def createHashID(input,length=6):
+    h = hashlib.sha256(input).hexdigest()[:length]
     return h
 
 

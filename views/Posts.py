@@ -1,5 +1,3 @@
-import web
-import config
 import markdown
 import views
 import models

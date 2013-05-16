@@ -20,7 +20,9 @@ urls = (
     '/_login','login',
     '/_logout','logout',
     '/_reg','register',
-    '/projects','projects'
+    '/projects','projects',
+    '/_upload','upload',
+    '/_thumnail/'+PAGE_RE,'thumbnail'
     )
 
 class index(utils.WebRequestHandler):
