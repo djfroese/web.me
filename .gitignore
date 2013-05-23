@@ -41,3 +41,5 @@ nosetests.xml
 dev
 
 .DS_Store
+
+static/uploads/*
