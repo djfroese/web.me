@@ -15,8 +15,15 @@ class edit(utils.WebRequestHandler):
             raise web.seeother('/')
     
     def POST(self,pid):
-        ins = web.input()
-        models.Posts.updatePost(pid=pid,where='id=%s'%pid,title=ins.title, body=ins.body,modified=datetime.datetime.now())
+        if self.user:
+            ins = web.input()
+            item = models.Posts.bykey(pid)
+            item.title = ins.title
+            item.body = ins.body
+            item.modified = datetime.datetime.now()
+            item.put()
+        
+        #models.Posts.updatePost(pid=pid,where='id=%s'%pid,title=ins.title, body=ins.body,modified=datetime.datetime.now())
         raise web.seeother('/post/%s'%pid)
 
 class new(utils.WebRequestHandler):
@@ -29,8 +36,16 @@ class new(utils.WebRequestHandler):
     def POST(self):
         if self.user:
             ins = web.input()
+            post = models.Posts()
+            print type(post)
+            post.title = ins.title
+            post.body = ins.body
             t = datetime.datetime.now()
-            pid = models.Posts.createPost(title=ins.title, body=ins.body, created=t, modified=t)
+            post.created = t
+            post.modified = t
+            pid = post.put()
+            
+            #pid = models.Posts.createPost(title=ins.title, body=ins.body, created=t, modified=t)
             raise web.seeother('/post/%s'%pid)
         else:
             raise web.seeother('/')
@@ -45,7 +60,9 @@ class detail(utils.WebRequestHandler):
 class delete(utils.WebRequestHandler):
     def GET(self,pid):
         if self.user:
-            models.Posts.deletePost(pid)
+            post = models.Posts.bykey(pid)
+            post.remove()
+            #models.Posts.deletePost(pid)
             raise web.seeother('/posts')
         else:
             raise web.seeother('/')

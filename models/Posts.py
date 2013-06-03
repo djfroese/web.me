@@ -1,6 +1,15 @@
 from datastore import data, cache
+import orm
 
-class Posts:
+class Posts(orm.Model):
+    title = orm.StringProperty()
+    body = orm.StringProperty()
+    id = orm.IntegerProperty(PrimaryKey=True)
+    created = orm.DateTimeProperty()
+    modified = orm.DateTimeProperty()
+    
+
+class PostsOld:
     @classmethod
     def posts(self,**k):
         value = cache.get('Posts','all')
