@@ -3,9 +3,9 @@ import views
 import models
 
 def posts(**k):
-    ps = models.Posts.all()
-    ps.order('-created')
-    l = ps.execute()
+    l = models.Posts.posts()
+    #ps.order('-created')
+    #l = ps.execute()
     
     #l = models.Posts.posts(**k)
     return views.render.posts.list(l)
@@ -29,8 +29,8 @@ def new():
     return views.render.posts.new()
 
 def detail(**k):
-    ps = models.Posts.all()
-    ps.order('-created')
-    l = ps.execute()
+    l = models.Posts.posts()
+    #ps.order('-created')
+    #l = ps.execute()
     #l = models.Posts.posts(**k)
     return views.render.posts.detail(l)

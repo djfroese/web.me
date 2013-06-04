@@ -69,15 +69,10 @@ class ModelQuery(object):
         _where = ' and '.join(self._filters)
         if not _where:
             _where = None
-        ckey = self._class.makekey(''.join([self._tablename,''.join(self._filters), self._order]))
-        #print ckey
-        values = ds.get(self._tablename, ckey)
-        if values is None:
-            values = ds.select(self._tablename,where=_where,order=self._order)
-            if values:
-                values = [self._class.make(x) for x in values]
-                ds.set(self._tablename, ckey, values)
-        
+        values = ds.select(self._tablename,where=_where,order=self._order)
+        if values:
+            values = [self._class.make(x) for x in values]
+    
         return values
 
 
@@ -115,15 +110,14 @@ class Model(object):
                         setattr(cls,h,v)
                         # generates the functions to call for getter/setter as we need more information
                         # than the basic getter/setter provides we pass these to make custom functions.
-                        setattr(cls,n,property(obj.make_getter(obj,n),obj.make_setter(obj,n)))
+                        setattr(cls,n,property(obj.make_getter(n),obj.make_setter(n)))
             cls.processed = True
-        
         
         return obj
         
     
     def __init__(self):
-        """Gets tablename to match Class name and creates properties dictionary to hold properties."""
+        """Get tablename to match Class name and creates properties dictionary to hold properties."""
         self.__tablename__ = self.__class__.__name__
         cls = self.__class__
         self._primarykey = cls.primarykey
@@ -131,12 +125,12 @@ class Model(object):
         self.properties = { k[1:]: v.adhoc() for k,v in cls.__dict__.items() if isinstance(v,Property) }
         
         
-    def make_getter(self, obj, n):
-        """Makes and returns a getter function."""
+    def make_getter(self, n):
+        """Make and return a getter function."""
         return lambda self: self.getval(n)
     
-    def make_setter(self, obj, n):
-        """Makes and returns a setter function."""
+    def make_setter(self, n):
+        """Make and return a setter function."""
         return lambda self, value: self.setval(n,value)
 
     def display(self):
@@ -147,7 +141,7 @@ class Model(object):
     
     @classmethod
     def makekey(cls,value):
-        "Makes a key value for the cache store."
+        "Make a key value for the cache store."
         secret = 'jfkl;aNNdip[10[98dfnl;a&fnfnip-1nvmcal;f8bjgls8dg]99anc]'
         newkey = hmac.new(secret, value).hexdigest()
         return newkey
@@ -162,30 +156,13 @@ class Model(object):
         return result
     
     @classmethod
-    def fetch(cls,key):
-        # look for key in cache
+    def key(cls, key):
         result = cls()
-        value = ds.get(result.__tablename__,key)
-        # if not found in cache, check database
-        if value is None:
-            if key == 'all':
-                _where = None
-            else:
-                _where = '%s="%s"'%(cls.primarykey,key)
-            value = ds.select(result.__tablename__,where=_where).list()
-            # if in database add value to cache
-            if value:
-                ds.set(result.__tablename__,key,value)
+        _where = '%s="%s"'%(result._primarykey,key)
+        value = ds.select(result.__tablename__,where=_where).list()
         
-        return value
-    
-    @classmethod
-    def bykey(cls, key):
-        result = cls.fetch(key)
-        if isinstance(result,cls):
-            return result
-        if result and len(result) == 1:
-            return cls.make(result[0])
+        if value and len(value) == 1:
+            return cls.make(value[0])
         
         return None
 
@@ -204,7 +181,6 @@ class Model(object):
             rowid = ds.insert(self.__tablename__,**props)
             self.setval(self._primarykey,rowid)
         
-        ds.set(self.__tablename__,self.getval(self._primarykey),self)
         return self.getval(self._primarykey)
 
     def remove(self):

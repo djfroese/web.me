@@ -37,7 +37,7 @@ class new(utils.WebRequestHandler):
         if self.user:
             ins = web.input()
             post = models.Posts()
-            print type(post)
+            #print type(post)
             post.title = ins.title
             post.body = ins.body
             t = datetime.datetime.now()
