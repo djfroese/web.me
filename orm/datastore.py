@@ -10,13 +10,12 @@ server_list = ['127.0.0.1:11211']
 
 
 
-class ds():
-    db = web.database(dbn=db_app,db=db_name)
-    
-    @classmethod
-    def setDBConnection(self, app, name, user, password):
-        self.db = web.database(dbn=app,db=name,user=user,pw=password)
-    
+
+db = web.database(dbn=db_app,db=db_name)
+
+def setDBConnection(app, name, user, password):
+    db = web.database(dbn=app,db=name,user=user,pw=password)
+
 #    @classmethod
 #    def setCacheConnection(servers,debuglvl=1):
 #        self.cache = memcache.Client(servers,debug=debuglvl)
@@ -27,19 +26,17 @@ class ds():
 #    @classmethod
 #    def set(self, table, key, value):
 #        self.cache.set(str("%s_%s"%(table,key)),value)
-    @classmethod
-    def select(self,table,**k):
-        return self.db.select(table,**k)
-    @classmethod
-    def insert(self,table,**k):
-        return self.db.insert(table,**k)
-    @classmethod
-    def delete(self,table,**k):
-        return self.db.delete(table,**k)
-    @classmethod
-    def update(self,table,where,**k):
-        self.db.update(table,where=where,**k)
-        
-    @classmethod
-    def createTable(self,table,columns,types):
-        pass
+def select(table,**k):
+    return db.select(table,**k)
+
+def insert(table,**k):
+    return db.insert(table,**k)
+
+def delete(table,**k):
+    return db.delete(table,**k)
+
+def update(table,where,**k):
+    db.update(table,where=where,**k)
+    
+def createTable(table,columns,types):
+    pass

@@ -1,11 +1,25 @@
 from datastore import cache, data
-import utils
+import utils, orm
 
-class Users:
+class Users(orm.Model):
+    username = orm.StringProperty()
+    pw = orm.StringProperty()
+    email = orm.StringProperty()
+    firstname = orm.StringProperty()
+    lastname = orm.StringProperty()
+    created = orm.DateTimeProperty()
+    #modified = orm.DateTimeProperty()
+    id = orm.IntegerProperty(PrimaryKey=True)
     
     @classmethod
     def userById(self,uid):
-        user = data.select('Users',where='id=%s'%uid,limit=1)[0]
+        user = cache.get('Users',uid)
+        if not user:
+            user = Users.key(uid)
+            if user:
+                cache.set('Users', uid, user)
+        
+        #user = data.select('Users',where='id=%s'%uid,limit=1)[0]
         return user
     
     @classmethod

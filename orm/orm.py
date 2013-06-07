@@ -1,5 +1,4 @@
-from datastore import ds
-import datetime, hmac
+import datetime, hmac, datastore
     
 
 class Property(object):
@@ -37,6 +36,10 @@ class IntegerProperty(Property):
 class StringProperty(Property):
     """A subclass of property that holds an String value instead of a generic value."""
     def setval(self, value):
+        #print type(value)
+        if value is None:
+            value = ''
+        
         if isinstance(value,str) or isinstance(value,unicode):
             self._val = str(value)
         else:
@@ -69,7 +72,7 @@ class ModelQuery(object):
         _where = ' and '.join(self._filters)
         if not _where:
             _where = None
-        values = ds.select(self._tablename,where=_where,order=self._order)
+        values = datastore.select(self._tablename,where=_where,order=self._order)
         if values:
             values = [self._class.make(x) for x in values]
     
@@ -93,10 +96,12 @@ class Model(object):
         properties defined in a subclass of Model."""        
         obj = super(type(cls), cls).__new__(cls)
         # checks whether or not the properties defined in the subclass have been created yet.
+        cls._tablename = cls.__name__
         if not cls.processed:
             # for all objects in __dict__ if it is an instance of Property (defined in subclass)
             # creates a property (getters, setters) for the named property, and hides the original
             # Property Objects.
+            cls._tablename = cls.__name__
             for k,v in cls.__dict__.items():
                 if isinstance(v,Property):
                     if v._primarykey:
@@ -159,7 +164,7 @@ class Model(object):
     def key(cls, key):
         result = cls()
         _where = '%s="%s"'%(result._primarykey,key)
-        value = ds.select(result.__tablename__,where=_where).list()
+        value = datastore.select(result.__tablename__,where=_where).list()
         
         if value and len(value) == 1:
             return cls.make(value[0])
@@ -174,16 +179,16 @@ class Model(object):
             
     def put(self):
         props = {k:v.getval() for k,v in self.properties.items()}
-        if self.__class__.fetch(self.getval(self._primarykey)):
-            ds.update(self.__tablename__,where='%s=%s'%(self._primarykey,self.getval(self._primarykey)),**props)
+        if self.__class__.key(self.getval(self._primarykey)):
+            datastore.update(self.__tablename__,where='%s=%s'%(self._primarykey,self.getval(self._primarykey)),**props)
         else:
             del props[self._primarykey]
-            rowid = ds.insert(self.__tablename__,**props)
+            rowid = datastore.insert(self.__tablename__,**props)
             self.setval(self._primarykey,rowid)
         
         return self.getval(self._primarykey)
 
     def remove(self):
-        ds.delete(self.__tablename__,where='%s=%s'%(self._primarykey,self.getval(self._primarykey)))
+        datastore.delete(self.__tablename__,where='%s=%s'%(self._primarykey,self.getval(self._primarykey)))
     
     

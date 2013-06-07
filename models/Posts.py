@@ -25,7 +25,8 @@ class Posts(orm.Model):
             q = Posts.all()
             q.order('-created')
             posts = q.execute()
-            cache.set('Post','all',posts)
+            if posts:
+                cache.set('Posts','all',posts)
         return posts
 
 #class PostsOld:
