@@ -1,4 +1,4 @@
-import datetime, hmac, datastore
+import datetime, hmac, datastore, json
     
 
 class Property(object):
@@ -31,7 +31,6 @@ class IntegerProperty(Property):
         else:
             raise TypeError
     
-    #val = property(getval,setval)
 
 class StringProperty(Property):
     """A subclass of property that holds an String value instead of a generic value."""
@@ -175,7 +174,14 @@ class Model(object):
     def all(cls):
         q = ModelQuery(cls)
         return q
-            
+        
+    def dump(self):
+        ps = { k:v.getval() for k,v in self.properties.items() }
+        return json.dumps(ps)
+    
+    def load(self,value):
+        ps = json.loads(value)
+        return self.make(ps)
             
     def put(self):
         props = {k:v.getval() for k,v in self.properties.items()}

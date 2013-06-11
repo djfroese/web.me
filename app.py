@@ -5,6 +5,7 @@ import datetime
 import views, config, utils
 from views import *
 from controllers import *
+import datastore
 
 
 PAGE_RE = r'((?:[a-zA-Z0-9_-]+/?)*)'

@@ -11,23 +11,32 @@ class Posts(orm.Model):
     
     @classmethod
     def bykey(cls, key):
-        post = cache.get('Posts',key)
+        post = None
+        result = cache.get('Posts',key)
+        if result:
+            post = Posts().load(result)
+        #post = cache.get('Posts',key)
         if not post:
             post = Posts.key(key)
-            cache.set('Posts',key,post)
+            cache.set('Posts',key,post.dump())
             
         return post
     
     @classmethod
     def posts(cls):
-        posts = cache.get('Posts','all')
+        posts = None
+        result = cache.get('Posts','all')
+        if result:
+            posts = [Posts().load(p) for p in result]
         if not posts:
             q = Posts.all()
             q.order('-created')
             posts = q.execute()
             if posts:
-                cache.set('Posts','all',posts)
+                cache.set('Posts','all',[post.dump() for post in posts])
         return posts
+    
+    
 
 #class PostsOld:
 #    @classmethod
