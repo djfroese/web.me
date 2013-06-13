@@ -5,7 +5,7 @@ import datetime
 import views, config, utils
 from views import *
 from controllers import *
-import datastore
+from datastore import cache
 
 
 PAGE_RE = r'((?:[a-zA-Z0-9_-]+/?)*)'
@@ -28,7 +28,13 @@ urls = (
 
 class index(utils.WebRequestHandler):
     def GET(self):
-        return views.render.base(views.Posts.posts(),title="Home",user=self.user)
+        result = cache.get('views.posts','all')
+        if not result:
+            result = views.render.base(views.Posts.posts(),title="Home",user=self.user)
+            cache.set('views.posts','all',result['__body__'])
+        
+        return result
+        #return views.render.base(views.Posts.posts(),title="Home",user=self.user)
         
 
 class flush(utils.WebRequestHandler):
