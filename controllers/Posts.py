@@ -1,11 +1,18 @@
 import web, datetime
 import utils, config, views
+from datastore import cache
 from views import *
 import models
 
 class post(utils.WebRequestHandler):
     def GET(self,pid):
-        return views.render.base(views.Posts.post(pid),user=self.user)
+        result = cache.get('views.post',pid)
+        if not result:
+            result = views.render.base(views.Posts.post(pid),user=self.user)
+            cache.set('views.post',pid,result['__body__'])
+               
+        return result
+        #return views.render.base(views.Posts.post(pid),user=self.user)
 
 class edit(utils.WebRequestHandler):
     def GET(self,pid):

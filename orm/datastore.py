@@ -13,7 +13,7 @@ server_list = ['127.0.0.1:11211']
 
 db = web.database(dbn=db_app,db=db_name)
 
-def setDBConnection(app, name, user, password):
+def setDBConnection(app, name, user=None, password=None):
     db = web.database(dbn=app,db=name,user=user,pw=password)
 
 #    @classmethod
