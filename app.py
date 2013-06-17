@@ -28,13 +28,13 @@ urls = (
 
 class index(utils.WebRequestHandler):
     def GET(self):
-        result = cache.get('views.posts','all')
-        if not result:
-            result = views.render.base(views.Posts.posts(),title="Home",user=self.user)
-            cache.set('views.posts','all',result['__body__'])
+        #result = cache.get('views.posts','all')
+        #if not result:
+        #    result = views.render.base(views.Posts.posts(),title="Home",user=self.user)
+        #    cache.set('views.posts','all',result['__body__'])
         
-        return result
-        #return views.render.base(views.Posts.posts(),title="Home",user=self.user)
+        #return result
+        return views.render.base(views.Posts.posts(),title="Home",user=self.user)
         
 
 class flush(utils.WebRequestHandler):

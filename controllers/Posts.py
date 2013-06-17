@@ -6,13 +6,13 @@ import models
 
 class post(utils.WebRequestHandler):
     def GET(self,pid):
-        result = cache.get('views.post',pid)
-        if not result:
-            result = views.render.base(views.Posts.post(pid),user=self.user)
-            cache.set('views.post',pid,result['__body__'])
+        #result = cache.get('views.post',pid)
+        #if not result:
+        #    result = views.render.base(views.Posts.post(pid),user=self.user)
+        #    cache.set('views.post',pid,result['__body__'])
                
-        return result
-        #return views.render.base(views.Posts.post(pid),user=self.user)
+        #return result
+        return views.render.base(views.Posts.post(pid),user=self.user)
 
 class edit(utils.WebRequestHandler):
     def GET(self,pid):
