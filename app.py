@@ -27,7 +27,8 @@ urls = (
     '/admin/users','manageusers',
     '/admin/users/_edit/(.*)','edituser',
     '/admin/users/create','adduser',
-    '/admin/users/_del/(.*)','deleteuser'
+    '/admin/users/_del/(.*)','deleteuser',
+    '/admin/users/_changepw/(.*)','changepw'
     )
 
 class index(utils.WebRequestHandler):

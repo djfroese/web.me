@@ -57,8 +57,8 @@ class ModelQuery(object):
         self._class = cls
     
     def filter(self, property_op, value):
-        self._filters.append("%s %s"%(property_op,value))
-        
+        self._filters.append("%s '%s'"%(property_op,value))
+        return self
     
     def order(self, column):
         """Sets order to return objects in."""
@@ -66,12 +66,18 @@ class ModelQuery(object):
             self._order = '%s DESC'%column[1:]
         else:
             self._order = '%s ASC'%column
+        return self
     
     def execute(self):
         _where = ' and '.join(self._filters)
         if not _where:
             _where = None
-        values = datastore.select(self._tablename,where=_where,order=self._order)
+        if self._order == '':
+            _order = None
+        else:
+            _order = self._order
+        
+        values = datastore.select(self._tablename,where=_where,order=_order)
         if values:
             values = [self._class.make(x) for x in values]
     

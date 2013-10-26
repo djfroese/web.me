@@ -24,7 +24,9 @@ class Users(orm.Model):
     
     @classmethod
     def userByName(self,name):
-        users = data.select('Users',where='username="%s"'%name,limit=1)
+        #users = data.select('Users',where='username="%s"'%name,limit=1)
+        users = Users.all().filter('username =',name).execute()
+        print users
         if users:
             return [x for x in users][0]
             #return user[0]
@@ -32,14 +34,15 @@ class Users(orm.Model):
             return None
     
     @classmethod
-    def register(cls, name, pw, email=None):
+    def register(cls, name, pw):
         pw_hash = utils.make_pw_hash(name,pw)
-        if email:
-            uid = data.insert('Users',username=name, pw=pw_hash,email=email)
-        else:
-            uid = data.insert('Users',username=name, pw=pw_hash)
         
-        return cls.userById(uid)
+        user = Users()
+        user.name = name
+        user.pw = pw_hash
+        user.put()
+        
+        return user
     
     @classmethod
     def login(cls, name, pw):

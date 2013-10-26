@@ -27,6 +27,28 @@ class manageusers(utils.WebRequestHandler):
     def POST(self):
         pass
     
+    
+class changepw(utils.WebRequestHandler):
+    def POST(self,uid):
+        if self.user:
+            ins = web.input()
+            errors = {}
+            
+            if utils.validate_pw(ins.pw, ins.confirmpw):
+                errors['nomatch']
+            
+            u = models.Users.userById(uid)
+            
+            if errors == {} and u:
+                u.pw = utils.make_pw_hash(u.username, ins.pw)
+                u.put()
+                cache.set('Users',u.id, u.dump())
+                raise web.seeother('/admin/users/_edit/%s'%uid)
+        else:
+            raise web.seeother('/')
+        
+        raise web.seeother('/admin/users')
+
 class edituser(utils.WebRequestHandler):
     def GET(self,uid):
         if (not self.user):
