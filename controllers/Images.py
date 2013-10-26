@@ -29,3 +29,4 @@ class thumbnail(utils.WebRequestHandler):
     def GET(self):
         return views.render.base(views.Images.thumbnails(),user=self.user)
 
+

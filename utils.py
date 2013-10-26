@@ -55,3 +55,10 @@ class WebRequestHandler():
     	uid = self.readSecureCookie('user_id')
     	self.user = uid and models.Users.userById(uid)    
 
+
+
+def validate_pw(pw,confirm):
+    if pw == confirm:
+        return False
+    else:
+        return True

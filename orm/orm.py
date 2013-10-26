@@ -179,9 +179,12 @@ class Model(object):
         ps = { k:v.getval() for k,v in self.properties.items() }
         return json.dumps(ps)
     
-    def load(self,value):
+    @classmethod
+    def load(cls,value):
+        if not value:
+            return None
         ps = json.loads(value)
-        return self.make(ps)
+        return cls.make(ps)
             
     def put(self):
         props = {k:v.getval() for k,v in self.properties.items()}

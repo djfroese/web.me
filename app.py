@@ -7,7 +7,6 @@ from views import *
 from controllers import *
 from datastore import cache
 
-
 PAGE_RE = r'((?:[a-zA-Z0-9_-]+/?)*)'
 
 urls = (
@@ -23,7 +22,12 @@ urls = (
     '/_reg','register',
     '/projects','projects',
     '/_upload','upload',
-    '/_thumbnail','thumbnail'
+    '/_thumbnail','thumbnail',
+    '/admin','admin',
+    '/admin/users','manageusers',
+    '/admin/users/_edit/(.*)','edituser',
+    '/admin/users/create','adduser',
+    '/admin/users/_del/(.*)','deleteuser'
     )
 
 class index(utils.WebRequestHandler):

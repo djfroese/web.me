@@ -5,18 +5,18 @@ $def with (page, title=None, user=None)
 	<title>Web.Me\
 $if title: : $title\
 	</title>
-	<link href="../static/main.css" rel='stylesheet' type='text/css' media='screen and (min-device-width: 700px)' />
-	<link href="../static/small-screen.css" rel='stylesheet' type='text/css' media='screen and (max-device-width: 480px)' />
-	<link href="../static/utils/bootstrap/css/bootstrap.css" rel='stylesheet' type='text/css' />
-	<script src="../static/utils/jquery/1.9.1/jquery.min.js" type='text/javascript'></script>
-	<script src="../static/holder.js"></script>
+	<link href="/static/main.css" rel='stylesheet' type='text/css' media='screen and (min-device-width: 700px)' />
+	<link href="/static/small-screen.css" rel='stylesheet' type='text/css' media='screen and (max-device-width: 480px)' />
+	<link href="/static/utils/bootstrap/css/bootstrap.css" rel='stylesheet' type='text/css' />
+	<script src="/static/utils/jquery/1.9.1/jquery.min.js" type='text/javascript'></script>
+	<script src="/static/holder.js"></script>
 	<meta name="viewport" content="width=device-width" />
 </head>
 <body>
 	<div>
 	<div class='sidebar'>
 		<div class='picture'>
-			<a alt="Home" href="/"><img src='../static/me.png'></a>
+			<a alt="Home" href="/"><img src='/static/me.png'></a>
 			<br /><br />
 		</div>
 		<div class='contact'>
@@ -36,8 +36,9 @@ $if title: : $title\
 	</div>
 	<div class='content'>
 	    <div class='text-right'>
-	        <ul class='inline'>
+	        <ul class='list-inline'>
 	            $if user:
+	                <li><a href='/admin'>admin</a></li>
 	                <li><a href='/_new'>new</a></li>
 	                <li><a href='/posts'>detail</a></li>
 	                <li><a href='/_logout'>logout</a></li>

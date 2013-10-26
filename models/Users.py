@@ -13,11 +13,11 @@ class Users(orm.Model):
     
     @classmethod
     def userById(self,uid):
-        user = cache.get('Users',uid)
+        user = self.load(cache.get('Users',uid))
         if not user:
             user = Users.key(uid)
             if user:
-                cache.set('Users', uid, user)
+                cache.set('Users', uid, user.dump())
         
         #user = data.select('Users',where='id=%s'%uid,limit=1)[0]
         return user
@@ -35,9 +35,9 @@ class Users(orm.Model):
     def register(cls, name, pw, email=None):
         pw_hash = utils.make_pw_hash(name,pw)
         if email:
-            uid = data.insert('Users',username=name, pw=pw_hash)
-        else:
             uid = data.insert('Users',username=name, pw=pw_hash,email=email)
+        else:
+            uid = data.insert('Users',username=name, pw=pw_hash)
         
         return cls.userById(uid)
     
